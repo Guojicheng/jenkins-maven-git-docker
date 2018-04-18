@@ -9,11 +9,10 @@
 # http://eggsylife.co.uk/2015/12/29/spring-boot-jenkins-and-docker-part-one/
 
 FROM jenkins
-MAINTAINER James Heggs jimbobegg@hotmail.com
-
 # Install Jenkins Plugins
-COPY resources/plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+COPY resources/plugins.txt /plugins.txt
+RUN /usr/local/bin/plugins.sh /plugins.txt
+
 # Configure Maven installation location in Jenkins
 COPY resources/hudson.tasks.Maven.xml /var/jenkins_home/hudson.tasks.Maven.xml
 
