@@ -8,12 +8,12 @@
 # As used on blog describing continuous delivery Jenkins, Docker and Spring Boot
 # http://eggsylife.co.uk/2015/12/29/spring-boot-jenkins-and-docker-part-one/
 
-FROM jenkins/jenkins:lts
+FROM jenkins
 MAINTAINER James Heggs jimbobegg@hotmail.com
 
 # Install Jenkins Plugins
 COPY resources/plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/install-plugins.sh </usr/share/jenkins/plugins.txt
+RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 # Configure Maven installation location in Jenkins
 COPY resources/hudson.tasks.Maven.xml /var/jenkins_home/hudson.tasks.Maven.xml
 
