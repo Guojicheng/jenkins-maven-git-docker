@@ -8,12 +8,12 @@
 # As used on blog describing continuous delivery Jenkins, Docker and Spring Boot
 # http://eggsylife.co.uk/2015/12/29/spring-boot-jenkins-and-docker-part-one/
 
-FROM jenkins:1.625.3
+FROM jenkins/jenkins:lts
 MAINTAINER James Heggs jimbobegg@hotmail.com
 
 # Install Jenkins Plugins
 COPY resources/plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+RUN /usr/local/bin/install-plugins.sh </usr/share/jenkins/plugins.txt
 
 # Configure Maven installation location in Jenkins
 COPY resources/hudson.tasks.Maven.xml /var/jenkins_home/hudson.tasks.Maven.xml
@@ -38,5 +38,19 @@ RUN ln -s /opt/maven/bin/mvn /usr/local/bin
 RUN rm -f /tmp/apache-maven-3.2.2.tar.gz
 ENV MAVEN_HOME /opt/maven
 
-# Switch back to Jenkins user
-USER jenkins
+# install depdency
+RUN apt-get install -y unzip openssl ca-certificates 
+# install gradle 
+ENV GRADLE_HOME /opt/gradle
+ENV GRADLE_VERSION 4.6
+ARG GRADLE_DOWNLOAD_SHA256=98bd5fd2b30e070517e03c51cbb32beee3e2ee1a84003a5a5d748996d4b1b915
+RUN wget -O gradle.zip "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
+        && echo "Checking download hash" \
+        && echo "${GRADLE_DOWNLOAD_SHA256} *gradle.zip" | sha256sum -c - \
+\
+	&& echo "Installing Gradle" \
+	&& unzip gradle.zip \
+	&& rm gradle.zip \
+	&& mv "gradle-${GRADLE_VERSION}" "${GRADLE_HOME}/" \
+	&& ln --symbolic "${GRADLE_HOME}/bin/gradle" /usr/bin/gradle
+ 
