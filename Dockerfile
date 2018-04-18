@@ -39,7 +39,7 @@ RUN rm -f /tmp/apache-maven-3.2.2.tar.gz
 ENV MAVEN_HOME /opt/maven
 
 # install depdency
-RUN apt-get install -y unzip openssl ca-certificates 
+RUN apt-get install -y unzip openssl ca-certificates libltdl.so.7 
 # install gradle 
 ENV GRADLE_HOME /opt/gradle
 ENV GRADLE_VERSION 4.6
