@@ -16,3 +16,5 @@ copyartifact:1.37
 rancher:1.0.9
 docker-commons:1.11
 git:3.8.0
+promoted-builds:v.2.27
+Matrix-Project:v.1.7.1
