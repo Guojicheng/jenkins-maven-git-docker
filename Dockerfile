@@ -14,7 +14,6 @@ MAINTAINER James Heggs jimbobegg@hotmail.com
 # Install Jenkins Plugins
 COPY resources/plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/install-plugins.sh </usr/share/jenkins/plugins.txt
-
 # Configure Maven installation location in Jenkins
 COPY resources/hudson.tasks.Maven.xml /var/jenkins_home/hudson.tasks.Maven.xml
 
